@@ -22,6 +22,7 @@ class ButtonList extends Component {
           }
           onClick={this.selectButton.bind(this)}
           value={amount}
+          style={{ margin: '5px' }}
         >
           {amount}
         </button>
