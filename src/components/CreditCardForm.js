@@ -7,7 +7,8 @@ class CreditCardForm extends Component {
     name: '',
     date: '',
     cvc: '',
-    errors: []
+    errors: [],
+    success: false
   };
 
   handleSubmit(event) {
@@ -38,6 +39,10 @@ class CreditCardForm extends Component {
     }
 
     this.setState({ errors: errs });
+
+    if (errs.length === 0) {
+      this.setState({ success: true });
+    }
   }
 
   handleInputChange({ target: { name, value } }) {
@@ -112,6 +117,7 @@ class CreditCardForm extends Component {
         </form>
         <div className="row">
           {this.renderErrors()}
+          {this.state.success ? <p className="white-text">Successful Deposit</p> : ''}
         </div>
       </div>
     );
