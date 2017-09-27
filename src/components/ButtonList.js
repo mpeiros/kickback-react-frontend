@@ -7,7 +7,11 @@ class ButtonList extends Component {
 
   renderButtons() {
     return this.state.funds.map(amount => {
-      return <button className="btn waves-effect waves-light">{amount}</button>
+      return (
+        <button className="btn waves-effect waves-light blue-grey darken-4">
+          {amount}
+        </button>
+      );
     });
   }
 
