@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import creditCardUtils from 'creditcardutils'
 
 class CreditCardForm extends Component {
   state = {
@@ -12,7 +13,31 @@ class CreditCardForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    
+    var errs = [];
+
+    const formattedNumber = creditCardUtils.formatCardNumber(this.state.cardNumber);
+
+    if (!creditCardUtils.validateCardNumber(formattedNumber)) {
+      errs.push('Enter a valid card number');
+    }
+
+    const expiry = creditCardUtils.parseCardExpiry(this.state.date);
+
+    if (!creditCardUtils.validateCardExpiry(expiry.month, expiry.year)) {
+      errs.push('Enter a valid expiration date');
+    }
+
+    const cardType = creditCardUtils.parseCardType(formattedNumber);
+
+    if (!creditCardUtils.validateCardCVC(this.state.cvc, cardType)) {
+      errs.push('Enter a valid CVC');
+    }
+
+    if (this.state.name === '') {
+      errs.push('You must enter a name');
+    }
+
+    this.setState({ errors: errs });
   }
 
   handleInputChange({ target: { name, value } }) {
@@ -37,7 +62,7 @@ class CreditCardForm extends Component {
                 placeholder="Credit card number"
                 value={this.state.cardNumber} 
                 onChange={this.handleInputChange.bind(this)}
-                className="blue-grey darken-4 center-align"
+                className="blue-grey darken-4 center-align white-text"
               />
             </div>
           </div>
@@ -49,7 +74,7 @@ class CreditCardForm extends Component {
                 placeholder="Name on card"
                 value={this.state.name} 
                 onChange={this.handleInputChange.bind(this)}
-                className="blue-grey darken-4 center-align"
+                className="blue-grey darken-4 center-align white-text"
               />
             </div>
             <div className="input-field col s3">
@@ -59,7 +84,7 @@ class CreditCardForm extends Component {
                 placeholder="MM/YY"
                 value={this.state.date} 
                 onChange={this.handleInputChange.bind(this)}
-                className="blue-grey darken-4 center-align"
+                className="blue-grey darken-4 center-align white-text"
               />
             </div>
             <div className="input-field col s3">
@@ -69,7 +94,7 @@ class CreditCardForm extends Component {
                 placeholder="CVC"
                 value={this.state.cvc} 
                 onChange={this.handleInputChange.bind(this)}
-                className="blue-grey darken-4 center-align"
+                className="blue-grey darken-4 center-align white-text"
               />
             </div>
           </div>
