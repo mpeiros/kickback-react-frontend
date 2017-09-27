@@ -5,15 +5,24 @@ class CreditCardForm extends Component {
     cardNumber: '',
     name: '',
     date: '',
-    cvc: ''
+    cvc: '',
+    errors: []
   };
 
   handleSubmit(event) {
     event.preventDefault();
+
+    
   }
 
   handleInputChange({ target: { name, value } }) {
     this.setState({ [name]: value });
+  }
+
+  renderErrors() {
+    return this.state.errors.map((error, index) => {
+      return <p key={index}>{error}</p>;
+    })
   }
 
   render() {
@@ -76,6 +85,9 @@ class CreditCardForm extends Component {
             </div>
           </div>
         </form>
+        <div className="row">
+          {this.renderErrors()}
+        </div>
       </div>
     );
   }
