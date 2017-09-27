@@ -46,7 +46,7 @@ class CreditCardForm extends Component {
 
   renderErrors() {
     return this.state.errors.map((error, index) => {
-      return <p key={index}>{error}</p>;
+      return <p key={index} className="white-text">{error}</p>;
     })
   }
 
